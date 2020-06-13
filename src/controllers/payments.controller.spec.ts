@@ -1,21 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
+import { PaymentsController } from './payments.controller';
 
-describe('AppController', () => {
-  let appController: AppController;
+describe('PaymentsController', () => {
+  let paymentsController: PaymentsController;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
+      controllers: [PaymentsController],
       providers: [],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    paymentsController = app.get<PaymentsController>(PaymentsController);
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return a status of declined or approved', () => {
+      const verified = paymentsController.verify()
+      expect(verified).toHaveProperty('status')
+      expect(['declined', 'approved']).toContain(verified.status)
     });
   });
 });

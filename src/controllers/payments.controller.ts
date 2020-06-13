@@ -1,9 +1,13 @@
 import { Controller, Post } from '@nestjs/common';
 
+interface VerifyResponse {
+  status: string
+}
+
 @Controller('payments')
 export class PaymentsController {
   @Post('verify')
-  verify(): object {
+  verify(): VerifyResponse {
     const random = Math.round(Math.random())
     let res
 
